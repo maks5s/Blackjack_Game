@@ -7,7 +7,7 @@ class Card:
         self.rank = rank
 
     def __str__(self):
-        return f"{self.rank} of {self.suit}"
+        return f"{self.rank['rank']} of {self.suit}"
 
 
 class Deck:
@@ -36,12 +36,12 @@ class Deck:
         random.shuffle(self.cards)
 
     def deal(self, number):
-        card_dealt = []
+        cards_dealt = []
 
         for _ in range(number):
-            card_dealt.append(self.cards.pop())
+            cards_dealt.append(self.cards.pop())
 
-        return card_dealt
+        return cards_dealt
 
 
 class Hand:
