@@ -119,3 +119,37 @@ class Game:
 
             player_hand.display_cards()
             dealer_hand.display_cards()
+
+    def check_winner(self, player_hand, dealer_hand, game_over=False):
+        if not game_over:
+            if player_hand.get_value() > 21:
+                print("You lost!")
+                return True
+
+            elif dealer_hand.get_value() > 21:
+                print("You win!")
+                return True
+
+            elif dealer_hand.is_blackjack() and player_hand.is_blackjack():
+                print("Tie!")
+                return True
+
+            elif player_hand.is_blackjack():
+                print("Blackjack! You win!")
+                return True
+
+            elif dealer_hand.is_blackjack():
+                print("Blackjack! You lost!")
+                return True
+
+        else:
+            if player_hand.get_value() > dealer_hand.get_value():
+                print("You win!")
+            elif player_hand.get_value() == dealer_hand.get_value():
+                print("Tie!")
+            else:
+                print("You lost!")
+
+            return True
+
+        return False
