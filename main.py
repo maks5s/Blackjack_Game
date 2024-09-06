@@ -86,3 +86,36 @@ class Hand:
         if not self.dealer:
             print(f"Value: {self.get_value()}")
         print("\n")
+
+
+class Game:
+    def play(self):
+        game_number = 0
+        games_to_play = 0
+
+        while games_to_play <= 0:
+            try:
+                game_number = int(input("How many games do u wanna play? "))
+            except:
+                print("Please enter a correct number")
+
+        while game_number <= games_to_play:
+            game_number += 1
+
+            deck = Deck()
+            deck.shuffle()
+
+            player_hand = Hand()
+            dealer_hand = Hand(dealer=True)
+
+            for _ in range(2):
+                player_hand.add_card(deck.deal(1))
+                dealer_hand.add_card(deck.deal(1))
+
+            print("\n")
+            print("*" * 30)
+            print(f"Game {game_number} of {games_to_play}")
+            print("*" * 30)
+
+            player_hand.display_cards()
+            dealer_hand.display_cards()
