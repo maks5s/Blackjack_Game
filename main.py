@@ -95,11 +95,11 @@ class Game:
 
         while games_to_play <= 0:
             try:
-                game_number = int(input("How many games do u wanna play? "))
+                games_to_play = int(input("How many games do u wanna play? "))
             except:
                 print("Please enter a correct number")
 
-        while game_number <= games_to_play:
+        while game_number < games_to_play:
             game_number += 1
 
             deck = Deck()
@@ -119,6 +119,46 @@ class Game:
 
             player_hand.display_cards()
             dealer_hand.display_cards()
+
+            if self.check_winner(player_hand, dealer_hand):
+                continue
+
+            choice = ""
+
+            while player_hand.get_value() < 21 and choice not in ["s", "stand"]:
+                choice = input("Choose 'Hit' or 'Stand': ").lower()
+                print("\n")
+
+                while choice not in ["h", "s", "hit", "stand"]:
+                    choice = input("Please choose correct option ('Hit' or 'Stand'): ").lower()
+                    print("\n")
+
+                if choice in ["h", "hit"]:
+                    player_hand.add_card(deck.deal(1))
+                    player_hand.display_cards()
+
+            if self.check_winner(player_hand, dealer_hand):
+                continue
+
+            player_hand_value = player_hand.get_value()
+            dealer_hand_value = dealer_hand.get_value()
+
+            while dealer_hand_value < 17:
+                dealer_hand.add_card(deck.deal(1))
+                dealer_hand_value = dealer_hand.get_value()
+
+            dealer_hand.display_cards(show_dealer_cards=True)
+
+            if self.check_winner(player_hand, dealer_hand):
+                continue
+
+            print("Final Results")
+            print("Your hand:", player_hand_value)
+            print("Dealer's hand:", dealer_hand_value)
+
+            self.check_winner(player_hand, dealer_hand, game_over=True)
+
+        print("Thanks for playing!")
 
     def check_winner(self, player_hand, dealer_hand, game_over=False):
         if not game_over:
@@ -153,3 +193,7 @@ class Game:
             return True
 
         return False
+
+
+game = Game()
+game.play()
