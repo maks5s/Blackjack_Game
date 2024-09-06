@@ -33,13 +33,15 @@ class Deck:
                 self.cards.append(Card(suit, rank))
 
     def shuffle(self):
-        random.shuffle(self.cards)
+        if len(self.cards) > 1:
+            random.shuffle(self.cards)
 
     def deal(self, number):
         cards_dealt = []
 
         for _ in range(number):
-            cards_dealt.append(self.cards.pop())
+            if len(self.cards) > 0:
+                cards_dealt.append(self.cards.pop())
 
         return cards_dealt
 
