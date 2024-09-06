@@ -1,5 +1,6 @@
 import random
 
+
 class Card:
     def __init__(self, suit, rank):
         self.suit = suit
@@ -41,3 +42,11 @@ class Deck:
             card_dealt.append(self.cards.pop())
 
         return card_dealt
+
+
+class Hand:
+    def __init__(self, dealer=False):
+        self.cards = []
+        self.value = 0
+        self.dealer = dealer
+
