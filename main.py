@@ -72,7 +72,7 @@ class Hand:
         return self.value
 
     def is_blackjack(self):
-        return self.value == 21
+        return self.get_value() == 21
 
     def display_cards(self, show_dealer_cards=False):
         print(f'''{"Dealer`s" if self.dealer else "Your`s"} hand:''')
