@@ -86,9 +86,14 @@ class Hand:
             else:
                 print(card)
 
-        if not self.dealer:
-            print(f"Value: {self.get_value()}")
-        print()
+        card_value = self.get_value()
+
+        if self.dealer and not show_dealer_cards:
+            # Subtracting the value of the first dealer`s card which is hidden
+            # because of show_dealer_cards variable
+            card_value -= int(self.cards[0].rank["value"])
+
+        print(f"Value: {card_value} \n")
 
 
 class Game:
