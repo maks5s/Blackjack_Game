@@ -88,7 +88,7 @@ class Hand:
 
         card_value = self.get_value()
 
-        if self.dealer and not show_dealer_cards:
+        if self.dealer and not show_dealer_cards and not self.is_blackjack() and len(self.cards):
             # Subtracting the value of the first dealer`s card which is hidden
             # because of show_dealer_cards variable
             card_value -= int(self.cards[0].rank["value"])
