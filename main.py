@@ -13,7 +13,7 @@ class Card:
 class Deck:
     def __init__(self):
         self.cards = []
-        suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
+        suits = ["Hearts ♥", "Diamonds ♦", "Clubs ♣", "Spades ♠"]
         ranks = [{"rank": "A", "value": 11},
                  {"rank": "2", "value": 2},
                  {"rank": "3", "value": 3},
