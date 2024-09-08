@@ -97,13 +97,19 @@ class Hand:
 
 
 class Game:
+    def __init__(self):
+        self.money = 50000
+        self.bet = 0
+
     def play(self):
-        print("Welcome to the Blackjack")
+        print("Welcome to the Blackjack\n")
 
         game_number = 0
 
-        while True:
-            is_playing = input("\nEnter 'Yes' or 'Y' to start a new game:").lower()
+        while self.money > 0:
+            print(f"Your budget is: {self.money}\n")
+
+            is_playing = input("Enter 'Yes' or 'Y' to start a new game:").lower()
 
             if is_playing not in ['yes', 'y']:
                 break
@@ -124,6 +130,26 @@ class Game:
             print("*" * 30)
             print(f"Game #{game_number}")
             print("*" * 30)
+
+            print(f"\nYour budget is: {self.money}\n")
+
+            self.bet = 0
+
+            while self.bet <= 0 or self.bet > self.money:
+                try:
+                    self.bet = int(input("Enter your bet: "))
+                    if self.bet <= 0:
+                        raise Exception("\nBet must be more than 0!\n")
+                    if self.bet > self.money:
+                        raise Exception(f"\nBet must be lower than your budget ({self.money})!\n")
+
+                except ValueError:
+                    print("\nPlease enter a correct number!\n")
+
+                except Exception as e:
+                    print(e)
+
+            self.money -= self.bet
 
             player_hand.display_cards()
             dealer_hand.display_cards()
@@ -166,41 +192,55 @@ class Game:
 
             self.check_winner(player_hand, dealer_hand, game_over=True)
 
+        if self.money == 0:
+            print("You lost all your budget!😥")
+
         print("\nThanks for playing!")
 
     def check_winner(self, player_hand, dealer_hand, game_over=False):
         if not game_over:
             if player_hand.get_value() > 21:
-                print("You have more than 21. You lost!")
+                print("You have more than 21. You lost!\n")
                 return True
 
             elif dealer_hand.get_value() > 21:
-                print("Dealer has more than 21. You win!")
+                print("Dealer has more than 21. You win!\n")
+                self.win_bet()
                 return True
 
             elif dealer_hand.is_blackjack() and player_hand.is_blackjack():
-                print("You and Dealer both have a Blackjack. Tie!")
+                print("You and Dealer both have a Blackjack. Tie!\n")
+                self.tie_bet()
                 return True
 
             elif player_hand.is_blackjack():
-                print("You have a Blackjack! You win!")
+                print("You have a Blackjack! You win!\n")
+                self.win_bet()
                 return True
 
             elif dealer_hand.is_blackjack():
-                print("Dealer has a Blackjack! You lost!")
+                print("Dealer has a Blackjack! You lost!\n")
                 return True
 
         else:
             if player_hand.get_value() > dealer_hand.get_value():
-                print("Your`s hand value is higher than Dealer`s. You win!")
+                print("Your`s hand value is higher than Dealer`s. You win!\n")
+                self.win_bet()
             elif player_hand.get_value() == dealer_hand.get_value():
-                print("Your`s hand value is equal to Dealer`s. Tie!")
+                print("Your`s hand value is equal to Dealer`s. Tie!\n")
+                self.tie_bet()
             else:
-                print("Your`s hand value is lower than Dealer`s. You lost!")
+                print("Your`s hand value is lower than Dealer`s. You lost!\n")
 
             return True
 
         return False
+
+    def win_bet(self):
+        self.money += self.bet * 2
+
+    def tie_bet(self):
+        self.money += self.bet
 
 
 game = Game()
