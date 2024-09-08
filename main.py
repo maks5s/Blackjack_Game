@@ -98,16 +98,16 @@ class Hand:
 
 class Game:
     def play(self):
+        print("Welcome to the Blackjack")
+
         game_number = 0
-        games_to_play = 0
 
-        while games_to_play <= 0:
-            try:
-                games_to_play = int(input("How many games do you want to play? "))
-            except:
-                print("Please enter a correct number: ")
+        while True:
+            is_playing = input("\nEnter 'Yes' or 'Y' to start a new game:").lower()
 
-        while game_number < games_to_play:
+            if is_playing not in ['yes', 'y']:
+                break
+
             game_number += 1
 
             deck = Deck()
@@ -122,7 +122,7 @@ class Game:
 
             print()
             print("*" * 30)
-            print(f"Game {game_number} of {games_to_play}")
+            print(f"Game #{game_number}")
             print("*" * 30)
 
             player_hand.display_cards()
